@@ -124,9 +124,9 @@ function blox_block__git_helper__remote_status() {
   fi
 }
 
-# Checks if cwd is a git repo
-function blox_block__git_helper__is_git_repo() {
-  return $(git rev-parse --git-dir > /dev/null 2>&1)
+# Checks if cwd is a git worktree
+function blox_block__git_helper__is_worktree() {
+  echo "${1##*$'\n'}"
 }
 
 # ---------------------------------------------
@@ -134,11 +134,12 @@ function blox_block__git_helper__is_git_repo() {
 
 function blox_block__git() {
 
-  if blox_block__git_helper__is_git_repo; then
+  local git_info="$(git rev-parse --git-dir --is-inside-work-tree 2>/dev/null)"
+
+  if [ "$git_info" ]; then
 
     local branch="$(blox_block__git_helper__branch)"
     local commit="$(blox_block__git_helper__commit)"
-    local b_status="$(blox_block__git_helper__status)"
     local remote="$(blox_block__git_helper__remote_status)"
 
     res=""
@@ -149,7 +150,10 @@ function blox_block__git() {
         res+="%F{${BLOX_BLOCK__GIT_COMMIT_COLOR}}${BLOX_CONF__BLOCK_PREFIX}${commit}${BLOX_CONF__BLOCK_SUFFIX}%{$reset_color%}"
     fi
 
-    res+=" ${b_status}"
+    if [ "true" = "$(blox_block__git_helper__is_worktree $git_info)" ]; then
+      res+=" $(blox_block__git_helper__status)"
+    fi
+
     res+="${remote}"
 
     echo $res
