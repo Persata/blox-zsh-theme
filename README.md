@@ -109,6 +109,7 @@ Shows git info.
 | :------- | :------ | :------ |
 | `BLOX_BLOCK__GIT_BRANCH_COLOR` | `'242' (grey)` | Branch color |
 | `BLOX_BLOCK__GIT_COMMIT_COLOR` | `'magenta'` | Commit hash color |
+| `BLOX_BLOCK__GIT_COMMIT_SHOW` | `true` | Show the latest commit hash |
 | `BLOX_BLOCK__GIT_CLEAN_COLOR` | `'green'` | Clean color |
 | `BLOX_BLOCK__GIT_CLEAN_SYMBOL` | `'✔︎'` | Clean symbol |
 | `BLOX_BLOCK__GIT_DIRTY_COLOR` | `'red'` | Dirty color |
